@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Naielly & Samuel — Tempo Juntos</title>
+  <title>Naielly & Samuel — Bodas</title>
   <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
@@ -18,6 +18,7 @@
   </header>
 
   <main>
+    <!-- (Seções anteriores mantidas) -->
     <section class="fotos-section">
       <div class="carrossel">
         <div class="fotos" id="fotos">
@@ -28,7 +29,6 @@
           <img src="images/foto5.jpg" alt="">
         </div>
       </div>
-
       <div class="texto-romantico">
         <p>
           Desde quando você chegou, tudo na minha vida ganhou mais cor e significado.
@@ -38,29 +38,42 @@
       </div>
     </section>
 
-    <!-- SEÇÃO TEMPO JUNTOS -->
+    <!-- Tempo juntos (mantém) -->
     <section class="tempo-juntos" id="tempo-juntos">
       <h2 class="tj-title">Tempo juntos</h2>
-
       <div class="boxes">
         <div class="box"><div class="num" id="anos">0</div><div class="label">Anos</div></div>
         <div class="box"><div class="num" id="meses">0</div><div class="label">Meses</div></div>
         <div class="box"><div class="num" id="dias">0</div><div class="label">Dias</div></div>
       </div>
-
       <div class="boxes">
         <div class="box"><div class="num" id="horas">00</div><div class="label">Horas</div></div>
         <div class="box"><div class="num" id="minutos">00</div><div class="label">Minutos</div></div>
         <div class="box"><div class="num" id="segundos">00</div><div class="label">Segundos</div></div>
       </div>
-
       <div class="frase-alternando" id="fraseAlternando">
         <div class="frase-numero" id="fraseNumero">0</div>
         <div class="frase-texto" id="fraseTexto">Carregando...</div>
       </div>
     </section>
+
+    <!-- NOVA SEÇÃO: BODAS (carrossel horizontal, arrastar) -->
+    <section class="bodas-section" id="bodas-section">
+      <h2 class="bodas-title">💍 Bodas de Namoro 💍</h2>
+
+      <div class="bodas-wrap">
+        <button class="nav left" id="navLeft" aria-label="Anterior">‹</button>
+
+        <div class="bodas-carousel" id="bodasCarousel" tabindex="0" aria-label="Carrossel de bodas">
+          <!-- Os cards são gerados via JS -->
+        </div>
+
+        <button class="nav right" id="navRight" aria-label="Próxima">›</button>
+      </div>
+    </section>
   </main>
 
+  <!-- Player -->
   <footer class="player-bar">
     <div class="player-content">
       <p class="musica-nome">Those Eyes – New West</p>
