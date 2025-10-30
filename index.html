@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Naielly & Samuel — Tempo Juntos</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <audio id="musica" loop>
+    <source src="ThoseEyes-NewWest.mp3" type="audio/mpeg" />
+  </audio>
+
+  <header class="top">
+    <h1 class="couple">Naielly & Samuel</h1>
+    <p class="since">30 de julho de 2022</p>
+  </header>
+
+  <main>
+    <section class="fotos-section">
+      <div class="carrossel">
+        <div class="fotos" id="fotos">
+          <img src="images/foto1.jpg" alt="">
+          <img src="images/foto2.jpg" alt="">
+          <img src="images/foto3.jpg" alt="">
+          <img src="images/foto4.jpg" alt="">
+          <img src="images/foto5.jpg" alt="">
+        </div>
+      </div>
+
+      <div class="texto-romantico">
+        <p>
+          Desde quando você chegou, tudo na minha vida ganhou mais cor e significado.
+          Seus gestos, suas palavras e sua presença tornaram meus dias mais leves e cheios de vida.
+          Compartilhar momentos com você me fez descobrir que as coisas simples da vida são as mais valiosas.
+        </p>
+      </div>
+    </section>
+
+    <!-- SEÇÃO TEMPO JUNTOS -->
+    <section class="tempo-juntos" id="tempo-juntos">
+      <h2 class="tj-title">Tempo juntos</h2>
+
+      <div class="boxes">
+        <div class="box"><div class="num" id="anos">0</div><div class="label">Anos</div></div>
+        <div class="box"><div class="num" id="meses">0</div><div class="label">Meses</div></div>
+        <div class="box"><div class="num" id="dias">0</div><div class="label">Dias</div></div>
+      </div>
+
+      <div class="boxes">
+        <div class="box"><div class="num" id="horas">00</div><div class="label">Horas</div></div>
+        <div class="box"><div class="num" id="minutos">00</div><div class="label">Minutos</div></div>
+        <div class="box"><div class="num" id="segundos">00</div><div class="label">Segundos</div></div>
+      </div>
+
+      <div class="frase-alternando" id="fraseAlternando">
+        <div class="frase-numero" id="fraseNumero">0</div>
+        <div class="frase-texto" id="fraseTexto">Carregando...</div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="player-bar">
+    <div class="player-content">
+      <p class="musica-nome">Those Eyes – New West</p>
+      <button id="playBtn" class="player-btn">▶</button>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,136 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: "Poppins", sans-serif;
+  background: linear-gradient(180deg, #070707, #000);
+  color: #fff;
+  line-height: 1.4;
+}
+
+/* Topo */
+.top {
+  text-align: center;
+  padding: 70px 16px 10px;
+}
+.couple {
+  font-family: "Great Vibes", cursive;
+  font-size: 56px;
+  color: #fff;
+}
+.since {
+  color: #ffb4c4;
+  font-weight: 600;
+}
+
+/* Fotos */
+.fotos-section {
+  text-align: center;
+  padding: 20px;
+}
+.fotos {
+  display: flex;
+  gap: 15px;
+  width: max-content;
+}
+.fotos img {
+  width: 240px;
+  height: 320px;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+}
+
+/* Texto romântico */
+.texto-romantico {
+  max-width: 800px;
+  margin: 20px auto;
+  font-size: 18px;
+  color: #e6e6e6;
+  font-style: italic;
+}
+
+/* Tempo juntos */
+.tempo-juntos {
+  text-align: center;
+  padding: 40px 10px 140px;
+}
+.tj-title {
+  font-size: 28px;
+  color: #ffccd5;
+  margin-bottom: 25px;
+}
+
+/* Quadrados */
+.boxes {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+.box {
+  width: 110px;
+  padding: 10px;
+  border-radius: 12px;
+  background: linear-gradient(180deg, #5a0613, #b40a2a, #ff9db0);
+  box-shadow: 0 10px 25px rgba(180, 10, 42, 0.2);
+}
+.num {
+  font-size: 26px;
+  font-weight: 700;
+}
+.label {
+  font-size: 13px;
+  margin-top: 5px;
+  color: #fff;
+}
+
+/* Frase alternando */
+.frase-alternando {
+  margin-top: 30px;
+  min-height: 70px;
+}
+.frase-numero {
+  font-size: 36px;
+  font-weight: 800;
+  color: #fff;
+  opacity: 0;
+  transition: opacity 1s;
+}
+.frase-texto {
+  font-size: 16px;
+  color: #ffccd5;
+  opacity: 0;
+  transition: opacity 1s;
+}
+.frase-alternando.mostrar .frase-numero,
+.frase-alternando.mostrar .frase-texto {
+  opacity: 1;
+}
+
+/* Player fixo */
+.player-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: linear-gradient(180deg, #070707, #0b0b0b);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  text-align: center;
+  padding: 10px 0;
+}
+.player-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+}
+.player-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 22px;
+  cursor: pointer;
+}
+.player-btn.ativo {
+  text-shadow: 0 0 12px rgba(255, 255, 255, 0.9);
+}
