@@ -21,10 +21,11 @@
   </header>
 
   <main>
-    <!-- Fotos / carrossel superior -->
+    <!-- Fotos / carrossel superior (mantido) -->
     <section class="fotos-section">
       <div class="carrossel" id="carrosselFotos">
         <div class="fotos" id="fotosTrack">
+          <!-- Substitua src se quiser outras fotos -->
           <img src="images/foto1.jpg" alt="foto 1">
           <img src="images/foto2.jpg" alt="foto 2">
           <img src="images/foto3.jpg" alt="foto 3">
@@ -42,18 +43,22 @@
       </div>
     </section>
 
-    <!-- Tempo juntos -->
+    <!-- Tempo juntos (3 + 3 quadradinhos) -->
     <section class="tempo-juntos" id="tempo-juntos">
       <h2 class="tj-title">Tempo juntos</h2>
 
-      <div class="boxes tempo-grid">
-        <div class="box"><div class="num" id="anos">0</div><div class="label">Anos</div></div>
-        <div class="box"><div class="num" id="meses">0</div><div class="label">Meses</div></div>
-        <div class="box"><div class="num" id="dias">0</div><div class="label">Dias</div></div>
+      <div class="tempo-grid-rows">
+        <div class="tempo-grid tempo-grid-top">
+          <div class="box"><div class="num" id="anos">0</div><div class="label">Anos</div></div>
+          <div class="box"><div class="num" id="meses">0</div><div class="label">Meses</div></div>
+          <div class="box"><div class="num" id="dias">0</div><div class="label">Dias</div></div>
+        </div>
 
-        <div class="box"><div class="num" id="horas">00</div><div class="label">Horas</div></div>
-        <div class="box"><div class="num" id="minutos">00</div><div class="label">Minutos</div></div>
-        <div class="box"><div class="num" id="segundos">00</div><div class="label">Segundos</div></div>
+        <div class="tempo-grid tempo-grid-bottom" style="margin-top:12px;">
+          <div class="box"><div class="num" id="horas">00</div><div class="label">Horas</div></div>
+          <div class="box"><div class="num" id="minutos">00</div><div class="label">Minutos</div></div>
+          <div class="box"><div class="num" id="segundos">00</div><div class="label">Segundos</div></div>
+        </div>
       </div>
 
       <div class="frase-alternando" id="fraseAlternando">
@@ -62,40 +67,38 @@
       </div>
     </section>
 
-    <!-- BODAS SECTION (integração completa: miniaturas + mostra imagem ao clicar) -->
+    <!-- BODAS SECTION: miniaturas + exibição de significado ao clicar -->
     <section id="bodas-section" class="bodas-section">
       <div class="bodas-container">
         <header class="bodas-header">
           <h2 class="bodas-title">Nosso tempo em <span>Bodas</span></h2>
         </header>
 
-        <div class="carousel-wrap">
-          <button class="carousel-btn prev" id="btnPrev" aria-label="anterior">‹</button>
-
+        <div class="carousel-wrap no-arrows">
           <div class="carousel" id="bodasCarousel" aria-roledescription="carousel">
-            <!-- track criado pelo JS -->
+            <!-- JS cria o track e items -->
           </div>
-
-          <button class="carousel-btn next" id="btnNext" aria-label="próximo">›</button>
         </div>
 
-        <!-- quando clicar em uma boda, a imagem maior aparece aqui (abaixo da carousel) -->
+        <!-- imagem grande (opcional) -->
         <div id="bodaDisplay" class="boda-display hidden" aria-live="polite">
           <div class="boda-display-inner">
             <img id="bodaDisplayImg" src="" alt="Boda selecionada">
           </div>
         </div>
 
+        <!-- caixa de significado (texto que aparece ao clicar em "Significado") -->
         <div id="significadoBox" class="significado-box hidden">
           <div class="significado-tag">Significado</div>
           <div class="significado-text" id="significadoText"></div>
         </div>
+
       </div>
     </section>
 
   </main>
 
-  <!-- footer player -->
+  <!-- player footer -->
   <footer class="player-bar">
     <div class="player-content">
       <p class="musica-nome">Those Eyes — New West</p>
@@ -103,7 +106,7 @@
     </div>
   </footer>
 
-  <!-- audio & video -->
+  <!-- audio & video (vídeo sem som) -->
   <audio id="musica" loop>
     <source src="ThoseEyes-NewWest.mp3" type="audio/mpeg">
   </audio>
