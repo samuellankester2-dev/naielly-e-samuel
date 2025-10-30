@@ -1,9 +1,6 @@
-/* =========================
-   style.css completo (substituir)
-   Mantém visual existente e adiciona Bodas
-   ========================= */
+/* style.css final: substitua por completo */
 
-/* reset básico */
+/* reset / base */
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%}
 body{
@@ -15,12 +12,12 @@ body{
   line-height:1.4;
 }
 
-/* ---------- Topo ---------- */
+/* Top */
 .top{ text-align:center; padding:56px 16px 8px; }
 .couple{ font-family:"Great Vibes", cursive; font-size:58px; color:#fff; margin-bottom:6px; }
 .since{ color:#ffb4c4; font-weight:600; }
 
-/* ---------- Fotos (carrossel superior) ---------- */
+/* Fotos (superior) */
 .fotos-section{ padding:12px 12px 20px; max-width:1100px; margin:0 auto; }
 .carrossel{ overflow:hidden; display:flex; justify-content:center; }
 .fotos{ display:flex; gap:14px; align-items:center; padding:12px; }
@@ -30,79 +27,91 @@ body{
 /* Texto romântico */
 .texto-romantico{ max-width:920px; margin:18px auto 8px; color:#e6dfe3; font-style:italic; padding:0 14px; }
 
-/* ---------- Tempo juntos ---------- */
+/* Tempo juntos */
 .tempo-juntos{ text-align:center; padding:30px 12px 20px; }
 .tj-title{ font-size:22px; margin-bottom:14px; color:#ffdfe6; }
-.tempo-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; max-width:720px; margin:0 auto; }
-.box{ background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.06)); padding:18px; border-radius:12px; box-shadow:0 8px 20px rgba(0,0,0,0.6); }
-.num{ font-size:28px; font-weight:800; color:#fff; }
-.label{ margin-top:6px; color:#ffdfe6; font-weight:600; }
-
-/* Ensure three up and three down layout (keeps previous layout) */
 .tempo-grid-rows { max-width:720px; margin:0 auto; }
 .tempo-grid-top, .tempo-grid-bottom { display: grid; grid-template-columns: repeat(3,1fr); gap:14px; }
+.box{
+  background: linear-gradient(180deg, rgba(255,200,215,0.06), rgba(255,240,240,0.02));
+  padding:18px; border-radius:12px; box-shadow:0 8px 20px rgba(0,0,0,0.45);
+  border: 1px solid rgba(255,255,255,0.03);
+}
+.num{ font-size:28px; font-weight:800; color:#fff; }
+.label{ margin-top:6px; color:#ffdfe6; font-weight:600; }
 
 /* frases alternando */
 .frase-alternando{ margin-top:18px; text-align:center; }
 .frase-numero{ font-size:28px; font-weight:800; color:#fff; }
 .frase-texto{ font-size:16px; color:#ffdfe6; margin-top:6px; transition:opacity .3s; }
 
-/* ---------- Player footer ---------- */
+/* Player footer */
 .player-bar{ position:fixed; left:0; right:0; bottom:0; background: linear-gradient(90deg, rgba(0,0,0,0.55), rgba(0,0,0,0.2)); padding:10px 14px; border-top:1px solid rgba(255,255,255,0.04); display:flex; justify-content:center; align-items:center; z-index:9999; }
 .player-content{ display:flex; gap:12px; align-items:center; }
 .musica-nome{ font-weight:600; color:#fff; }
 .player-btn{ background:transparent; border-radius:8px; border:1px solid rgba(255,255,255,0.06); color:#fff; padding:8px 12px; cursor:pointer; font-weight:700; }
 
-/* ---------- BODAS: Geral ---------- */
+/* Bodas section */
 .bodas-section { padding: 48px 0 200px; background: linear-gradient(180deg, rgba(3,3,3,0.95), rgba(7,7,7,0.98)); color:#fff; }
 .bodas-container{ max-width:1100px; margin:0 auto; padding:0 18px; text-align:center; }
 .bodas-header .bodas-title{ font-family:"Playball",cursive; font-size:54px; color:#fff; margin-bottom:14px; }
 .bodas-header .bodas-title span{ background: linear-gradient(45deg,#ff4b2b,#ff416c); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
 
-/* carousel wrapper - no arrows by default */
+/* carousel */
 .carousel-wrap{ display:flex; align-items:center; justify-content:center; gap:12px; margin-top:6px; }
 .carousel{ overflow:hidden; width:100%; max-width:760px; }
 .carousel-track{ display:flex; gap:28px; align-items:center; padding:6px 6px; transition: transform .45s cubic-bezier(.22,.9,.32,1); touch-action: pan-y; }
 
-/* card */
+/* item */
 .boda-item{ width:320px; flex:0 0 auto; scroll-snap-align:center; display:flex; flex-direction:column; align-items:center; user-select:none; position:relative; }
-.boda-card{ width:260px; height:260px; border-radius:50%; background: radial-gradient(#0f0f0f,#070707); display:flex; align-items:center; justify-content:center; position:relative; box-shadow:0 14px 40px rgba(0,0,0,0.6); transition:transform .18s; overflow:visible; }
-.boda-inner{ width:76%; height:76%; display:flex; align-items:center; justify-content:center; flex-direction:column; }
-.boda-inner img{ width:100%; height:100%; display:block; object-fit:cover; border-radius:12px; }
+.boda-card{ width:220px; height:220px; border-radius:50%; background: radial-gradient(#101010,#080808); display:flex; align-items:center; justify-content:center; position:relative; box-shadow:0 12px 30px rgba(0,0,0,0.6); transition:transform .18s; overflow:visible; }
+.boda-inner{ width:86%; height:86%; display:flex; align-items:center; justify-content:center; flex-direction:column; text-align:center; }
+.boda-emblema{ width:56%; height:56%; display:flex; align-items:center; justify-content:center; font-size:44px; line-height:1; }
+.boda-nome{ margin-top:8px; font-weight:700; font-size:14px; color:#fff; text-shadow:0 2px 8px rgba(0,0,0,0.6); }
 
-/* label, days, button */
-.boda-years{ display:inline-block; margin-bottom:12px; padding:6px 14px; border-radius:12px; font-weight:700; font-size:14px; color:#fff; background:rgba(255,255,255,0.03); }
-.boda-days{ margin-top:10px; font-size:16px; color:#ddd; text-align:center; }
+/* small label + button */
+.boda-years{ display:inline-block; margin-bottom:10px; padding:6px 10px; border-radius:12px; font-weight:700; font-size:13px; color:#fff; background:rgba(255,255,255,0.02); }
+.boda-days{ margin-top:10px; font-size:14px; color:#ddd; text-align:center; }
 .significado-toggle{ margin-top:12px; padding:8px 14px; border-radius:14px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06); color:#fff; cursor:pointer; font-weight:700; }
 
-/* displayed image below carousel (optional) */
-.boda-display{ margin-top:18px; display:flex; justify-content:center; }
-.boda-display-inner{ width:760px; max-width:92%; background: linear-gradient(180deg, rgba(0,0,0,0.35), rgba(0,0,0,0.18)); padding:16px; border-radius:12px; border:1px solid rgba(255,255,255,0.04); }
-.boda-display img{ width:100%; height:auto; display:block; border-radius:10px; }
+/* glow (suave, só atrás do círculo) */
+.boda-card::before{
+  content:"";
+  position:absolute;
+  inset:auto;
+  width:360px;
+  height:360px;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  border-radius:50%;
+  filter:blur(28px);
+  opacity:0;
+  transition:opacity .28s;
+  pointer-events:none;
+  z-index:0;
+}
+.boda-item.centered .boda-card::before{ opacity:0.28; animation:pulseGlow 2.6s infinite; }
 
-/* significado box (texto) */
+/* pulse keyframes */
+@keyframes pulseGlow { 0%{transform:translate(-50%,-50%) scale(.98); opacity:.3}50%{transform:translate(-50%,-50%) scale(1.04); opacity:.5}100%{transform:translate(-50%,-50%) scale(.98); opacity:.3} }
+
+/* quando centered, traz elemento pra frente */
+.boda-item.centered .boda-card{ transform: translateY(-6px) scale(1.03); z-index:3; }
+
+/* significado box */
 .significado-box{ max-width:760px; margin:24px auto 0; text-align:left; display:none; }
 .significado-box.active{ display:block; }
 .significado-tag{ display:inline-block; padding:8px 16px; border-radius:12px; background:rgba(0,0,0,0.32); color:#fff; font-weight:700; margin-bottom:10px; }
 .significado-text{
   background: linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.06));
   padding:16px; border-radius:10px; border:1px solid rgba(255,255,255,0.04);
-  color:#fff; line-height:1.6; text-shadow: 0 2px 6px rgba(0,0,0,0.6);
+  color:#fff; line-height:1.6; text-shadow: 0 2px 8px rgba(0,0,0,0.6);
 }
 
-/* centered emphasis */
-.boda-item.centered .boda-card{ transform:translateY(-6px) scale(1.02); z-index:3; }
-.boda-item.centered .boda-card::after{ content:""; position:absolute; inset:-28px; border-radius:50%; filter:blur(36px); opacity:.95; animation:pulseGlow 2.4s infinite; pointer-events:none; }
-
-/* pulse keyframes */
-@keyframes pulseGlow { 0%{transform:scale(.95);opacity:.6}50%{transform:scale(1.06);opacity:1}100%{transform:scale(.95);opacity:.6} }
-
-/* glow element (created by JS) will take color from dataset */
-.boda-glow{ position:absolute; inset:-28px; border-radius:50%; filter:blur(36px); pointer-events:none; opacity:0; transition:opacity .28s; z-index:1; }
-
 /* responsive */
-@media (max-width:900px){ .boda-item{ width:280px } .boda-card{ width:220px;height:220px } .carousel-track{ padding:6px 24px; gap:20px } }
-@media (max-width:520px){ .boda-item{ width:240px } .boda-card{ width:200px;height:200px } .carousel-btn{ display:none } .fotos img{ width:180px; height:240px } .couple{ font-size:44px } }
+@media (max-width:900px){ .boda-item{ width:280px } .boda-card{ width:200px;height:200px } .carousel-track{ padding:6px 24px; gap:20px } .boda-emblema{ font-size:36px } }
+@media (max-width:520px){ .boda-item{ width:240px } .boda-card{ width:180px;height:180px } .boda-emblema{ font-size:32px } .fotos img{ width:180px; height:240px } .couple{ font-size:44px } }
 
-/* small helpers */
+/* helpers */
 .hidden{ display:none }

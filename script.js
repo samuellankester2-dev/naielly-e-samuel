@@ -1,7 +1,7 @@
-/* =========================
-   script.js completo (substituir)
-   Mantém funcionalidades anteriores e adiciona bodas (1..35) com significados
-   ========================= */
+/* script.js final: substitua por completo
+   - mantém audio, fotos, contador
+   - cria seção Bodas (1..35) com emblemas parecidos, cor do círculo e significados
+*/
 
 /* --------- Player (musica) ---------- */
 const musica = document.getElementById("musica");
@@ -35,7 +35,7 @@ if (playBtn) {
 
 /* --------- Tempo juntos (contagem em tempo real) ---------- */
 (function tempoJuntos(){
-  const dataInicio = new Date(2022,6,30,0,0,0); // 30 Jul 2022
+  const dataInicio = new Date(2022,6,30,0,0,0); // 30 Jul 2022 (mês base 0)
   function atualizarTempo(){
     const agora = new Date();
     let diff = agora - dataInicio;
@@ -85,12 +85,53 @@ if (playBtn) {
   alternar();
 })();
 
-/* --------- BODAS: construção do carrossel e comportamento (1..35) ---------- */
+/* --------- BODAS: carrossel com emblemas e significados (1..35) ---------- */
 (function bodasModule(){
   const NAMORO = new Date(2022,6,30); // 30/07/2022
-  const COUNT = 35; // imagens 1..35 (nomes: boda1.jpg ... boda35.jpg)
+  const COUNT = 35;
 
-  // ====== SIGNIFICADOS (VOCÊ ME ENVIOU TODOS) ======
+  // ===== Emblemas (ícones parecidos com as imagens) =====
+  // Usei pequenas SVGs / emojis para representar cada boda de forma parecida.
+  // Se quiser trocar algum ícone, diga o número e eu atualizo.
+  const emblems = {
+    1: '📜',   // Papel
+    2: '🧵',   // Algodão
+    3: '🌾',   // Trigo
+    4: '🌸',   // Flores
+    5: '🌳',   // Madeira
+    6: '🌺',   // Perfume (flor)
+    7: '🧶',   // Lã
+    8: '🏺',   // Barro
+    9: '🧺',   // Vime (cesto)
+    10: '🔩',  // Estanho (metal)
+    11: '⚙️',  // Aço (engrenagem)
+    12: '🖤',  // Ônix (preto)
+    13: '🧵',  // Linho (fio)
+    14: '🐚',  // Marfim (tom suave)
+    15: '💎',  // Cristal
+    16: '🔷',  // Safira (azul)
+    17: '🌹',  // Rosas
+    18: '🔹',  // Turquesa
+    19: '🌊',  // Água Marinha
+    20: '🏺',  // Porcelana (vasilha)
+    21: '🥈',  // Prata
+    22: '🦪',  // Pérola
+    23: '🪸',  // Coral
+    24: '💚',  // Esmeralda (verde)
+    25: '🥇',  // Ouro
+    26: '💜',  // Ametista
+    27: '💠',  // Diamante (simbolizado)
+    28: '⚪',  // Platina (claro)
+    29: '🍷',  // Vinho
+    30: '✨',  // Brilhante
+    31: '🌲',  // Carvalho
+    32: '🌻',  // Girassol
+    33: '🌳',  // Álamo
+    34: '🌿',  // Sândalo
+    35: '🌴'   // Jequitibá (árvore)
+  };
+
+  // ===== Significados (já enviados por você) =====
   const bodasMeanings = {
 1: "1 Ano – Papel\nSimbolizam o início do relacionamento, onde a delicadeza e a possibilidade de escrever uma nova história se encontram. É o começo de uma jornada cheia de sonhos.",
 2: "2 Anos – Algodão\nRepresentam suavidade e aconchego. Dois anos juntos revelam um relacionamento que se adapta com leveza e conforto.",
@@ -131,8 +172,6 @@ if (playBtn) {
 
   // DOM refs
   const carousel = document.getElementById('bodasCarousel');
-  const bodaDisplay = document.getElementById('bodaDisplay');
-  const bodaDisplayImg = document.getElementById('bodaDisplayImg');
   const significadoBox = document.getElementById('significadoBox');
   const significadoText = document.getElementById('significadoText');
 
@@ -143,7 +182,7 @@ if (playBtn) {
   track.className = 'carousel-track';
   carousel.appendChild(track);
 
-  // helper
+  // helper days difference
   function daysBetween(d1,d2){ return Math.floor((d2 - d1)/(1000*60*60*24)); }
 
   // build items 1..COUNT
@@ -151,28 +190,42 @@ if (playBtn) {
     const item = document.createElement('div');
     item.className = 'boda-item';
     item.dataset.index = i-1;
-    // color based on hue for glow
-    const hue = Math.round((i * 32) % 360);
-    const color = `hsl(${hue} 72% 52%)`;
+
+    // choose color by index (palette)
+    const palette = ['#ff8aa4','#ffd07a','#ffd4d4','#ffb3c6','#b3e6ff','#ffc1a8','#d7b0ff','#ffc9b0','#ffe7b5','#d1d1d1','#b8c0ff','#9fd9c5','#f8d9e6','#f0e6d6','#cfe8ff','#a5d1ff','#ffb3b3','#b9f0e6','#a6f0f0','#f7e3f3'];
+    const color = palette[(i-1) % palette.length];
     item.dataset.color = color;
 
-    // years label
+    // years label small above
     const yearsLabel = document.createElement('div');
     yearsLabel.className = 'boda-years';
     yearsLabel.textContent = `${i} Ano${i>1?'s':''}`;
 
-    // card (miniatura inside) - uses image file names boda1.jpg ...
+    // card (circle) - contains emblem + name inside/below
     const card = document.createElement('div');
     card.className = 'boda-card';
+    // set glow color using inline style on pseudo via data-attribute (we'll set style on card element)
+    card.style.setProperty('--glow-color', color);
+
     const inner = document.createElement('div');
     inner.className = 'boda-inner';
-    const img = document.createElement('img');
-    img.src = `images/Boda/boda${i}.jpg`;
-    img.alt = `Boda ${i}`;
-    inner.appendChild(img);
+
+    const emblem = document.createElement('div');
+    emblem.className = 'boda-emblema';
+    emblem.textContent = emblems[i] || '◉'; // emblem (emoji/SVG substitute)
+
+    const name = document.createElement('div');
+    name.className = 'boda-nome';
+    // derive display name from the meaning first line (ex: "1 Ano – Papel" -> "Papel")
+    const firstLine = (bodasMeanings[i] || '').split('\n')[0];
+    const displayName = firstLine ? firstLine.replace(/^\d+\s*Ano[s]?\s*–\s*/,'') : `Boda ${i}`;
+    name.textContent = displayName;
+
+    inner.appendChild(emblem);
+    inner.appendChild(name);
     card.appendChild(inner);
 
-    // days (calculate)
+    // days info (same as before)
     const anniversary = new Date(NAMORO.getFullYear() + i, NAMORO.getMonth(), NAMORO.getDate());
     const remaining = daysBetween(new Date(), anniversary);
     const daysEl = document.createElement('div');
@@ -183,7 +236,7 @@ if (playBtn) {
       daysEl.innerHTML = `<strong>${remaining} dias</strong> <small>para completar</small>`;
     }
 
-    // significado toggle
+    // significado button
     const btnSign = document.createElement('button');
     btnSign.className = 'significado-toggle';
     btnSign.textContent = 'Significado';
@@ -200,28 +253,22 @@ if (playBtn) {
     item.appendChild(daysEl);
     item.appendChild(btnSign);
 
-    // glow element appended inside card (hidden by default)
-    const glow = document.createElement('div');
-    glow.className = 'boda-glow';
-    glow.style.background = color;
-    glow.style.opacity = '0';
-    card.appendChild(glow);
+    // set glow color on card element (the ::before uses card.style)
+    card.style.setProperty('box-shadow','0 12px 30px rgba(0,0,0,0.5)');
 
-    // hover pulse
+    // hover to subtly show glow (card::before appearance is controlled by .centered)
     item.addEventListener('mouseenter', ()=>{
-      glow.style.opacity = '0.95';
-      glow.style.animation = 'pulseGlow 2.4s infinite';
+      // temporarily mark as centered visual
+      item.classList.add('centered');
     });
     item.addEventListener('mouseleave', ()=>{
-      glow.style.opacity = '0';
-      glow.style.animation = 'none';
+      item.classList.remove('centered');
     });
 
-    // clicking the item centers it and shows the larger image below
+    // click to center
     item.addEventListener('click', ()=>{
       centeredIndex = Number(item.dataset.index);
       refreshItems();
-      showBodaImage(i);
     });
 
     track.appendChild(item);
@@ -237,6 +284,33 @@ if (playBtn) {
     const centered = items[centeredIndex];
     if(centered){
       centered.classList.add('centered');
+      // set the glow color on centered card's ::before via inline style
+      const card = centered.querySelector('.boda-card');
+      if(card){
+        const c = centered.dataset.color;
+        card.style.setProperty('--glow-color', c);
+        // set the ::before background using a small inline style trick: create an overlay div
+        // we'll insert/update a glow-overlay element behind the card to control color & opacity
+        let overlay = card.querySelector('.glow-overlay');
+        if(!overlay){
+          overlay = document.createElement('div');
+          overlay.className = 'glow-overlay';
+          overlay.style.position = 'absolute';
+          overlay.style.inset = 'auto';
+          overlay.style.width = '360px';
+          overlay.style.height = '360px';
+          overlay.style.left = '50%';
+          overlay.style.top = '50%';
+          overlay.style.transform = 'translate(-50%,-50%)';
+          overlay.style.borderRadius = '50%';
+          overlay.style.filter = 'blur(28px)';
+          overlay.style.zIndex = '0';
+          overlay.style.pointerEvents = 'none';
+          card.appendChild(overlay);
+        }
+        overlay.style.background = centered.dataset.color || '#ff8aa4';
+        overlay.style.opacity = '0.28';
+      }
     }
     centerActiveItem();
     updateGlows();
@@ -282,31 +356,21 @@ if (playBtn) {
   });
   track.addEventListener('pointercancel', ()=>{ isDown=false; });
 
-  // keyboard left/right optional
+  // keyboard optional
   window.addEventListener('keydown', (e)=>{ if(e.key==='ArrowRight') { centeredIndex = Math.min(items.length-1, centeredIndex+1); refreshItems(); } if(e.key==='ArrowLeft'){ centeredIndex = Math.max(0, centeredIndex-1); refreshItems(); } });
 
-  // show boda image below the carousel
-  function showBodaImage(num){
-    const src = `images/Boda/boda${num}.jpg`;
-    if(bodaDisplayImg){
-      bodaDisplayImg.src = src;
-      bodaDisplayImg.alt = `Boda ${num}`;
-      bodaDisplay.classList.remove('hidden');
-      bodaDisplay.scrollIntoView({behavior:'smooth', block:'center'});
-    }
-  }
-
-  // glows update (ensure centered item glow is visible)
+  // update glows (ensure centered item glow is visible)
   function updateGlows(){
     items.forEach((it, idx)=>{
-      const glow = it.querySelector('.boda-glow');
-      if(!glow) return;
+      const card = it.querySelector('.boda-card');
+      const overlay = card ? card.querySelector('.glow-overlay') : null;
+      if(!card) return;
       if(idx === centeredIndex){
-        glow.style.opacity = '0.95';
-        glow.style.animation = 'pulseGlow 2.4s infinite';
+        if(overlay) overlay.style.opacity = '0.28';
+        card.style.zIndex = 5;
       } else {
-        glow.style.opacity = '0';
-        glow.style.animation = 'none';
+        if(overlay) overlay.style.opacity = '0';
+        card.style.zIndex = 1;
       }
     });
   }
