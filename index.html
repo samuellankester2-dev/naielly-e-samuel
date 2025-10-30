@@ -1,31 +1,35 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Naielly & Samuel — Tempo Juntos</title>
-  <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <title>Naielly & Samuel — Nosso Tempo</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playball&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Main CSS -->
+  <link rel="stylesheet" href="style.css">
+  <meta name="description" content="Naielly & Samuel — tempo juntos, fotos, música e bodas.">
 </head>
 <body>
-  <audio id="musica" loop>
-    <source src="ThoseEyes-NewWest.mp3" type="audio/mpeg" />
-  </audio>
 
+  <!-- Header -->
   <header class="top">
     <h1 class="couple">Naielly & Samuel</h1>
     <p class="since">30 de julho de 2022</p>
   </header>
 
   <main>
+    <!-- Fotos / carrossel superior -->
     <section class="fotos-section">
-      <div class="carrossel">
-        <div class="fotos" id="fotos">
-          <img src="images/foto1.jpg" alt="">
-          <img src="images/foto2.jpg" alt="">
-          <img src="images/foto3.jpg" alt="">
-          <img src="images/foto4.jpg" alt="">
-          <img src="images/foto5.jpg" alt="">
+      <div class="carrossel" id="carrosselFotos">
+        <div class="fotos" id="fotosTrack">
+          <img src="images/foto1.jpg" alt="foto 1">
+          <img src="images/foto2.jpg" alt="foto 2">
+          <img src="images/foto3.jpg" alt="foto 3">
+          <img src="images/foto4.jpg" alt="foto 4">
+          <img src="images/foto5.jpg" alt="foto 5">
         </div>
       </div>
 
@@ -38,17 +42,15 @@
       </div>
     </section>
 
-    <!-- SEÇÃO TEMPO JUNTOS -->
+    <!-- Tempo juntos -->
     <section class="tempo-juntos" id="tempo-juntos">
       <h2 class="tj-title">Tempo juntos</h2>
 
-      <div class="boxes">
+      <div class="boxes tempo-grid">
         <div class="box"><div class="num" id="anos">0</div><div class="label">Anos</div></div>
         <div class="box"><div class="num" id="meses">0</div><div class="label">Meses</div></div>
         <div class="box"><div class="num" id="dias">0</div><div class="label">Dias</div></div>
-      </div>
 
-      <div class="boxes">
         <div class="box"><div class="num" id="horas">00</div><div class="label">Horas</div></div>
         <div class="box"><div class="num" id="minutos">00</div><div class="label">Minutos</div></div>
         <div class="box"><div class="num" id="segundos">00</div><div class="label">Segundos</div></div>
@@ -59,15 +61,58 @@
         <div class="frase-texto" id="fraseTexto">Carregando...</div>
       </div>
     </section>
+
+    <!-- BODAS SECTION (integração completa: miniaturas + mostra imagem ao clicar) -->
+    <section id="bodas-section" class="bodas-section">
+      <div class="bodas-container">
+        <header class="bodas-header">
+          <h2 class="bodas-title">Nosso tempo em <span>Bodas</span></h2>
+        </header>
+
+        <div class="carousel-wrap">
+          <button class="carousel-btn prev" id="btnPrev" aria-label="anterior">‹</button>
+
+          <div class="carousel" id="bodasCarousel" aria-roledescription="carousel">
+            <!-- track criado pelo JS -->
+          </div>
+
+          <button class="carousel-btn next" id="btnNext" aria-label="próximo">›</button>
+        </div>
+
+        <!-- quando clicar em uma boda, a imagem maior aparece aqui (abaixo da carousel) -->
+        <div id="bodaDisplay" class="boda-display hidden" aria-live="polite">
+          <div class="boda-display-inner">
+            <img id="bodaDisplayImg" src="" alt="Boda selecionada">
+          </div>
+        </div>
+
+        <div id="significadoBox" class="significado-box hidden">
+          <div class="significado-tag">Significado</div>
+          <div class="significado-text" id="significadoText"></div>
+        </div>
+      </div>
+    </section>
+
   </main>
 
+  <!-- footer player -->
   <footer class="player-bar">
     <div class="player-content">
-      <p class="musica-nome">Those Eyes – New West</p>
-      <button id="playBtn" class="player-btn">▶</button>
+      <p class="musica-nome">Those Eyes — New West</p>
+      <button id="playBtn" class="player-btn" aria-label="play">▶</button>
     </div>
   </footer>
 
+  <!-- audio & video -->
+  <audio id="musica" loop>
+    <source src="ThoseEyes-NewWest.mp3" type="audio/mpeg">
+  </audio>
+
+  <video id="bgVideo" loop muted playsinline style="display:none;">
+    <source src="video.mp4" type="video/mp4">
+  </video>
+
+  <!-- main script -->
   <script src="script.js"></script>
 </body>
 </html>

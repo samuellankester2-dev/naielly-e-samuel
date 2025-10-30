@@ -1,85 +1,293 @@
-const dataInicio = new Date("2022-07-30T00:00:00");
+/* =========================
+   script.js completo
+   Mantém funcionalidades anteriores e adiciona bodas (1..35)
+   ========================= */
+
+/* --------- Player (musica) ---------- */
 const musica = document.getElementById("musica");
 const playBtn = document.getElementById("playBtn");
-
 let tocando = false;
-playBtn.addEventListener("click", () => {
-  if (!tocando) {
-    musica.play();
-    playBtn.textContent = "⏸";
-    playBtn.classList.add("ativo");
-    tocando = true;
-  } else {
-    musica.pause();
-    playBtn.textContent = "▶";
-    playBtn.classList.remove("ativo");
-    tocando = false;
+if (playBtn) {
+  playBtn.addEventListener("click", () => {
+    if (!tocando) {
+      musica.play().catch(()=>{});
+      playBtn.textContent = "⏸";
+      tocando = true;
+    } else {
+      musica.pause();
+      playBtn.textContent = "▶";
+      tocando = false;
+    }
+  });
+}
+
+/* --------- Fotos superior: arrastar (touch) ---------- */
+(function initTopPhotos(){
+  const fotosTrack = document.getElementById('fotosTrack');
+  if(!fotosTrack) return;
+  let isDown=false, startX=0, scrollLeft=0;
+  fotosTrack.addEventListener('mousedown', (e)=>{ isDown=true; startX=e.pageX - fotosTrack.offsetLeft; scrollLeft=fotosTrack.scrollLeft; fotosTrack.style.cursor='grabbing'; });
+  window.addEventListener('mouseup', ()=>{ isDown=false; fotosTrack.style.cursor='default'; });
+  fotosTrack.addEventListener('mousemove', (e)=>{ if(!isDown) return; e.preventDefault(); const x = e.pageX - fotosTrack.offsetLeft; const walk = (x - startX) * 1.2; fotosTrack.scrollLeft = scrollLeft - walk; });
+  fotosTrack.addEventListener('touchstart',(e)=>{ startX = e.touches[0].pageX - fotosTrack.offsetLeft; scrollLeft=fotosTrack.scrollLeft; });
+  fotosTrack.addEventListener('touchmove',(e)=>{ const x=e.touches[0].pageX - fotosTrack.offsetLeft; const walk=(x-startX)*1.2; fotosTrack.scrollLeft = scrollLeft - walk; });
+})();
+
+/* --------- Tempo juntos (contagem em tempo real) ---------- */
+(function tempoJuntos(){
+  const dataInicio = new Date(2022,6,30,0,0,0); // 30 Jul 2022
+  function atualizarTempo(){
+    const agora = new Date();
+    let diff = agora - dataInicio;
+    let segundos = Math.floor(diff/1000);
+    let minutos = Math.floor(segundos/60);
+    let horas = Math.floor(minutos/60);
+    let dias = Math.floor(horas/24);
+    let anos = Math.floor(dias/365);
+    let meses = Math.floor((dias % 365)/30);
+    let diasRest = dias % 30;
+
+    const elAnos = document.getElementById("anos");
+    const elMeses = document.getElementById("meses");
+    const elDias = document.getElementById("dias");
+    const elHoras = document.getElementById("horas");
+    const elMin = document.getElementById("minutos");
+    const elSeg = document.getElementById("segundos");
+
+    if(elAnos) elAnos.textContent = anos;
+    if(elMeses) elMeses.textContent = meses;
+    if(elDias) elDias.textContent = diasRest;
+    if(elHoras) elHoras.textContent = String(horas%24).padStart(2,'0');
+    if(elMin) elMin.textContent = String(minutos%60).padStart(2,'0');
+    if(elSeg) elSeg.textContent = String(segundos%60).padStart(2,'0');
   }
-});
+  setInterval(atualizarTempo,1000);
+  atualizarTempo();
 
-// Atualiza o contador
-function atualizarTempo() {
-  const agora = new Date();
-  let diff = agora - dataInicio;
+  // frases alternando
+  const frases = [
+    ()=> [Math.floor((new Date() - dataInicio)/(1000*60*60*24*29.53)), "Luas cheias desde o começo"],
+    ()=> [Math.floor((new Date() - dataInicio)/(1000*60*60*24*7)), "Finais de semana (sáb/dom)"],
+    ()=> [Math.floor((new Date() - dataInicio)/(1000*60*60*24)), "Dias juntos"],
+    ()=> [Math.floor((new Date() - dataInicio)/(1000*60)), "Minutos juntos"],
+    ()=> [Math.floor((new Date() - dataInicio)/(1000*60*60)), "Horas juntos"]
+  ];
+  let fi = 0;
+  function alternar(){
+    const numEl = document.getElementById('fraseNumero');
+    const txtEl = document.getElementById('fraseTexto');
+    const [val, txt] = frases[fi % frases.length]();
+    if(numEl) numEl.textContent = val.toLocaleString('pt-BR');
+    if(txtEl) txtEl.textContent = txt;
+    fi++;
+  }
+  setInterval(alternar,4200);
+  alternar();
+})();
 
-  let segundos = Math.floor(diff / 1000);
-  let minutos = Math.floor(segundos / 60);
-  let horas = Math.floor(minutos / 60);
-  let dias = Math.floor(horas / 24);
-  let anos = Math.floor(dias / 365);
-  let meses = Math.floor((dias % 365) / 30);
-  let diasRest = dias % 30;
+/* --------- BODAS: construção do carrossel e comportamento (1..35) ---------- */
+(function bodasModule(){
+  const NAMORO = new Date(2022,6,30); // 30/07/2022
 
-  document.getElementById("anos").textContent = anos;
-  document.getElementById("meses").textContent = meses;
-  document.getElementById("dias").textContent = diasRest;
-  document.getElementById("horas").textContent = String(horas % 24).padStart(2, "0");
-  document.getElementById("minutos").textContent = String(minutos % 60).padStart(2, "0");
-  document.getElementById("segundos").textContent = String(segundos % 60).padStart(2, "0");
-}
-setInterval(atualizarTempo, 1000);
-atualizarTempo();
+  // Apenas 1..35 (imagens: images/Boda/1.jpg ... 35.jpg)
+  const COUNT = 35;
 
-// Frases alternadas (número + texto)
-const frases = [
-  () => [Math.floor((new Date() - dataInicio) / (1000 * 60 * 60 * 24 * 29.53)), "Luas cheias desde o começo"],
-  () => [Math.floor((new Date().getFullYear() - 2022)), "Natais juntos"],
-  () => [Math.floor((new Date() - dataInicio) / (1000 * 60 * 60 * 24 * 7)), "Finais de semana (Sábado/Domingo)"],
-  () => [new Date().getFullYear() - 2022, "Dias dos Namorados"],
-  () => [new Date().getFullYear() - 2022, "Aniversários de namoro"],
-  () => [Math.floor((new Date() - dataInicio) / 60000), "Minutos juntos"],
-  () => [Math.floor((new Date() - dataInicio) / 3600000), "Horas juntos"]
-];
+  // DOM refs
+  const carousel = document.getElementById('bodasCarousel');
+  const btnPrev = document.getElementById('btnPrev');
+  const btnNext = document.getElementById('btnNext');
+  const bodaDisplay = document.getElementById('bodaDisplay');
+  const bodaDisplayImg = document.getElementById('bodaDisplayImg');
+  const significadoBox = document.getElementById('significadoBox');
+  const significadoText = document.getElementById('significadoText');
 
-let indice = 0;
-function alternarFrases() {
-  const bloco = document.getElementById("fraseAlternando");
-  const num = document.getElementById("fraseNumero");
-  const texto = document.getElementById("fraseTexto");
+  if(!carousel) return;
 
-  const [valor, descricao] = frases[indice % frases.length]();
+  // create track
+  const track = document.createElement('div');
+  track.className = 'carousel-track';
+  carousel.appendChild(track);
 
-  bloco.classList.remove("mostrar");
-  setTimeout(() => {
-    num.textContent = valor.toLocaleString("pt-BR");
-    texto.textContent = descricao;
-    bloco.classList.add("mostrar");
-  }, 1000);
+  // helper
+  function daysBetween(d1,d2){ return Math.floor((d2 - d1)/(1000*60*60*24)); }
 
-  indice++;
-}
-setInterval(alternarFrases, 4000);
-alternarFrases();
+  // build items 1..COUNT
+  for(let i=1;i<=COUNT;i++){
+    const item = document.createElement('div');
+    item.className = 'boda-item';
+    item.dataset.index = i-1;
+    // color default generated by hue to give variety (used for glow)
+    const hue = Math.round((i * 27) % 360);
+    const color = `hsl(${hue} 72% 52%)`;
+    item.dataset.color = color;
 
-// Carrossel infinito ida e volta
-const fotos = document.getElementById("fotos");
-fotos.innerHTML += fotos.innerHTML;
-let pos = 0, dir = -1;
-function animar() {
-  pos += dir * 0.3;
-  if (pos <= -fotos.scrollWidth / 2) dir = 1;
-  if (pos >= 0) dir = -1;
-  fotos.style.transform = `translateX(${pos}px)`;
-  requestAnimationFrame(animar);
-}
-animar();
+    // years label
+    const yearsLabel = document.createElement('div');
+    yearsLabel.className = 'boda-years';
+    yearsLabel.textContent = `${i} Ano${i>1?'s':''}`;
+
+    // card (miniatura inside)
+    const card = document.createElement('div');
+    card.className = 'boda-card';
+    const inner = document.createElement('div');
+    inner.className = 'boda-inner';
+    const img = document.createElement('img');
+    img.src = `images/Boda/${i}.jpg`; // uses the image content itself
+    img.alt = `Boda ${i}`;
+    inner.appendChild(img);
+    card.appendChild(inner);
+
+    // days (calculate)
+    const anniversary = new Date(NAMORO.getFullYear() + i, NAMORO.getMonth(), NAMORO.getDate());
+    const remaining = daysBetween(new Date(), anniversary);
+    const daysEl = document.createElement('div');
+    daysEl.className = 'boda-days';
+    if(remaining <= 0){
+      daysEl.innerHTML = `<strong>Completo</strong> <small>há ${Math.abs(remaining)} dias</small>`;
+    } else {
+      daysEl.innerHTML = `<strong>${remaining} dias</strong> <small>para completar</small>`;
+    }
+
+    // significado toggle (we will show the image content as the "meaning", but also keep a text slot)
+    const btnSign = document.createElement('button');
+    btnSign.className = 'significado-toggle';
+    btnSign.textContent = 'significado';
+    // Default meaning text: instruct user; the actual meaning text is embedded in the image content per your request
+    const defaultMeaning = `Toque na imagem para ver o significado que está escrito na arte da boda.`;
+
+    btnSign.addEventListener('click', (e)=>{
+      e.stopPropagation();
+      // show the larger image (same file) and show a placeholder/explanatory text (user said meanings are inside the image)
+      showBodaImage(i);
+      significadoText.textContent = defaultMeaning;
+      significadoBox.classList.add('active');
+      // scroll display into view
+      significadoBox.scrollIntoView({behavior:'smooth', block:'center'});
+    });
+
+    item.appendChild(yearsLabel);
+    item.appendChild(card);
+    item.appendChild(daysEl);
+    item.appendChild(btnSign);
+
+    // glow element appended inside card (hidden by default)
+    const glow = document.createElement('div');
+    glow.className = 'boda-glow';
+    glow.style.background = color;
+    glow.style.opacity = '0';
+    card.appendChild(glow);
+
+    // hover pulse
+    item.addEventListener('mouseenter', ()=>{
+      glow.style.opacity = '0.95';
+      glow.style.animation = 'pulseGlow 2.4s infinite';
+    });
+    item.addEventListener('mouseleave', ()=>{
+      glow.style.opacity = '0';
+      glow.style.animation = 'none';
+    });
+
+    // when clicking on the item, center and show image
+    item.addEventListener('click', ()=>{
+      centeredIndex = Number(item.dataset.index);
+      refreshItems();
+      showBodaImage(i);
+    });
+
+    track.appendChild(item);
+  }
+
+  // centralization & navigation
+  let items = Array.from(track.children);
+  let centeredIndex = 0;
+
+  function refreshItems(){
+    items = Array.from(track.children);
+    items.forEach(it => it.classList.remove('centered'));
+    const centered = items[centeredIndex];
+    if(centered){
+      centered.classList.add('centered');
+    }
+    centerActiveItem();
+    updateGlows();
+  }
+
+  function centerActiveItem(animate=true){
+    const trackRect = track.getBoundingClientRect();
+    const containerW = track.clientWidth;
+    const centered = items[centeredIndex];
+    if(!centered) return;
+    const itemRect = centered.getBoundingClientRect();
+    const offset = (itemRect.left + itemRect.width/2) - (trackRect.left + containerW/2);
+    const currentTransform = getTranslateX(track) || 0;
+    const newTransform = currentTransform - offset;
+    track.style.transition = animate ? 'transform .45s cubic-bezier(.22,.9,.32,1)' : 'none';
+    track.style.transform = `translateX(${newTransform}px)`;
+  }
+
+  function getTranslateX(el){
+    const st = window.getComputedStyle(el);
+    const tr = st.transform || st.webkitTransform || st.mozTransform;
+    if(tr && tr !== 'none'){
+      const match = tr.match(/matrix.*\((.+)\)/);
+      if(match){
+        const values = match[1].split(', ');
+        return parseFloat(values[4]);
+      }
+    }
+    return 0;
+  }
+
+  function goNext(){ centeredIndex = Math.min(items.length -1, centeredIndex + 1); refreshItems(); }
+  function goPrev(){ centeredIndex = Math.max(0, centeredIndex - 1); refreshItems(); }
+
+  if(btnNext) btnNext.addEventListener('click', goNext);
+  if(btnPrev) btnPrev.addEventListener('click', goPrev);
+
+  // pointer drag for track
+  let isDown=false, startX=0, prevTranslate=0;
+  track.addEventListener('pointerdown', (e)=>{ isDown=true; startX = e.clientX; prevTranslate = getTranslateX(track) || 0; track.setPointerCapture(e.pointerId); track.style.cursor='grabbing'; });
+  track.addEventListener('pointermove', (e)=>{ if(!isDown) return; const current = prevTranslate + (e.clientX - startX); track.style.transition='none'; track.style.transform = `translateX(${current}px)`; });
+  track.addEventListener('pointerup', (e)=>{ isDown=false; track.style.cursor='default';
+    // snap to nearest
+    const trackRect = track.getBoundingClientRect();
+    let closestIdx=0, closestDist=Infinity;
+    items.forEach((it,i)=>{ const r=it.getBoundingClientRect(); const center = r.left + r.width/2; const dist = Math.abs((trackRect.left + trackRect.width/2) - center); if(dist < closestDist){ closestDist = dist; closestIdx = i; } });
+    centeredIndex = closestIdx;
+    refreshItems();
+  });
+  track.addEventListener('pointercancel', ()=>{ isDown=false; });
+
+  // keyboard
+  window.addEventListener('keydown', (e)=>{ if(e.key==='ArrowRight') goNext(); if(e.key==='ArrowLeft') goPrev(); });
+
+  // show boda image below the carousel
+  function showBodaImage(num){
+    const src = `images/Boda/${num}.jpg`;
+    bodaDisplayImg.src = src;
+    bodaDisplayImg.alt = `Boda ${num}`;
+    bodaDisplay.classList.remove('hidden');
+    // hide significado box until user clicks significado button (if they clicked item, we still show default meaning)
+    // scroll to display
+    bodaDisplay.scrollIntoView({behavior:'smooth', block:'center'});
+  }
+
+  // glows update (ensure centered item glow is visible)
+  function updateGlows(){
+    items.forEach((it, idx)=>{
+      const glow = it.querySelector('.boda-glow');
+      if(!glow) return;
+      if(idx === centeredIndex){
+        glow.style.opacity = '0.95';
+        glow.style.animation = 'pulseGlow 2.4s infinite';
+      } else {
+        glow.style.opacity = '0';
+        glow.style.animation = 'none';
+      }
+    });
+  }
+
+  // init
+  setTimeout(()=>{ items = Array.from(track.children); centeredIndex = 0; refreshItems(); }, 80);
+
+})();
